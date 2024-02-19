@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/ui/NavBar";
 import Footer from "@/components/ui/Footer";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
-      <body className={inter.className}>
-        <NavBar />
-        {children}
-        <Footer />
-      </body>
+      <UserProvider>
+        <body className={inter.className}>
+          <NavBar />
+          {children}
+          <Footer />
+        </body>
+      </UserProvider>
     </html>
   );
 }
