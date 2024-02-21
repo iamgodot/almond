@@ -1,9 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
-import { buttonVariants } from "@/components/ui/button";
-import Footer from "@/components/ui/Footer";
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper"
+import { buttonVariants } from "@/components/ui/button"
+import Footer from "@/components/ui/Footer"
 
 export default function Home() {
     return (
@@ -11,12 +11,13 @@ export default function Home() {
             {/* Hero section */}
             <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
                 <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-                    Chat with your <span className="text-green-600">resume</span>
+                    Chat with your{" "}
+                    <span className="text-green-600">resume</span>
                 </h1>
                 <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-                    Almond allows you to have conversations upon your resume. Simply
-                    upload your resume as a PDF file and start asking questions right
-                    away.
+                    Almond allows you to have conversations upon your resume.
+                    Simply upload your resume as a PDF file and start asking
+                    questions right away.
                 </p>
 
                 <Link
@@ -60,7 +61,8 @@ export default function Home() {
                             Start chatting in minutes
                         </h2>
                         <p className="mt-4 text-lg text-gray-600">
-                            Chatting to your resume has never been easier than with Almond.
+                            Chatting to your resume has never been easier than
+                            with Almond.
                         </p>
                     </div>
                 </div>
@@ -69,12 +71,15 @@ export default function Home() {
                 <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0 md:mx-4">
                     <li className="md:flex-1">
                         <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-green-600">Step 1</span>
+                            <span className="text-sm font-medium text-green-600">
+                                Step 1
+                            </span>
                             <span className="text-xl font-semibold">
                                 Sign up for an account
                             </span>
                             <span className="mt-2 text-zinc-700">
-                                Either starting out with a free plan or choose our{" "}
+                                Either starting out with a free plan or choose
+                                our{" "}
                                 <Link
                                     href="/pricing"
                                     className="text-green-700 underline underline-offset-2"
@@ -87,25 +92,29 @@ export default function Home() {
                     </li>
                     <li className="md:flex-1">
                         <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-green-600">Step 2</span>
+                            <span className="text-sm font-medium text-green-600">
+                                Step 2
+                            </span>
                             <span className="text-xl font-semibold">
                                 Upload your resume in PDF
                             </span>
                             <span className="mt-2 text-zinc-700">
-                                We&apos;ll process your file and make it ready for you to chat
-                                with.
+                                We&apos;ll process your file and make it ready
+                                for you to chat with.
                             </span>
                         </div>
                     </li>
                     <li className="md:flex-1">
                         <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-green-600">Step 3</span>
+                            <span className="text-sm font-medium text-green-600">
+                                Step 3
+                            </span>
                             <span className="text-xl font-semibold">
                                 Start asking questions
                             </span>
                             <span className="mt-2 text-zinc-700">
-                                It&apos;s that simple. Try out Almond today - it really takes
-                                less than a minute.
+                                It&apos;s that simple. Try out Almond today - it
+                                really takes less than a minute.
                             </span>
                         </div>
                     </li>
@@ -128,5 +137,5 @@ export default function Home() {
             </div>
             <Footer />
         </>
-    );
+    )
 }
