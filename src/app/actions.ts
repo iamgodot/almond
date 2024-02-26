@@ -59,3 +59,18 @@ export async function deleteUserFile(id: string): Promise<File | null> {
     })
     return file
 }
+
+export async function getFileUploadStatus(fileId: string) {
+    const user = await getUser()
+    if (!user) {
+        return null
+    }
+    const file = await prisma.file.findFirst({
+        where: {
+            id: fileId,
+            userId: user.id,
+        },
+    })
+    if (!file) return { status: "PENDING" }
+    return { status: file.uploadStatus }
+}
