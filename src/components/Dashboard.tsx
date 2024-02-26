@@ -14,6 +14,7 @@ function Dashboard() {
     const [isLoading, setIsLoading] = useState<Boolean>(true)
     const [isDeleting, setIsDeleting] = useState<Boolean>(false)
 
+    //TODO: consider using revalidatePath to refresh
     useEffect(() => {
         getUserFiles().then((value) => {
             setFiles(value)
