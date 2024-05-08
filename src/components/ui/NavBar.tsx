@@ -2,8 +2,8 @@
 
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import Link from "next/link"
-import { buttonVariants } from "./button"
-import { ArrowRight } from "lucide-react"
+import { Button, buttonVariants } from "./button"
+import { ArrowRight, Moon, Nut, Sun } from "lucide-react"
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import Image from "next/image"
@@ -18,23 +18,47 @@ function NavBar() {
                     <Link href="/" className="flex z-40 font-semibold">
                         <span>Almond</span>
                     </Link>
-                    <div className="hidden items-center space-x-4 sm:flex">
+                    {!user ? (
+                        <div>
+                            <Link
+                                href="#features"
+                                className={buttonVariants({
+                                    variant: "ghost",
+                                    size: "sm",
+                                })}
+                            >
+                                Features
+                            </Link>
+                            <Link
+                                href="#usage"
+                                className={buttonVariants({
+                                    variant: "ghost",
+                                    size: "sm",
+                                })}
+                            >
+                                Usage
+                            </Link>
+                            <Link
+                                href="#pricing"
+                                className={buttonVariants({
+                                    variant: "ghost",
+                                    size: "sm",
+                                })}
+                            >
+                                Pricing
+                            </Link>
+                        </div>
+                    ) : null}
+                    <div className="hidden items-center gap-1 sm:flex">
+                        <Button variant="ghost">
+                            <Sun />
+                        </Button>
                         {!user ? (
                             <>
-                                <Link
-                                    href="/pricing"
-                                    className={buttonVariants({
-                                        variant: "ghost",
-                                        size: "sm",
-                                    })}
-                                >
-                                    Pricing
-                                </Link>
                                 <LoginLink
                                     className={buttonVariants({ size: "sm" })}
                                 >
-                                    Sign in{" "}
-                                    <ArrowRight className="ml-1.5 h-5 w-5" />
+                                    Sign in
                                 </LoginLink>
                             </>
                         ) : (
