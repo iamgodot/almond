@@ -1,5 +1,3 @@
-import MaxWidthWrapper from "./MaxWidthWrapper"
-
 function Footer() {
     return (
         <footer id="footer">
@@ -107,16 +105,16 @@ function Footer() {
             </section>
 
             <section className="container pb-14 text-center">
-                <h3>
+                <p className="text-sm">
                     &copy; 2024 by{" "}
                     <a
                         target="_blank"
                         href="https://github.com/iamgodot"
-                        className="text-primary transition-all border-primary hover:border-b-2"
+                        className="transition-all border-primary hover:border-b-2"
                     >
                         Godot
                     </a>
-                </h3>
+                </p>
             </section>
         </footer>
     )

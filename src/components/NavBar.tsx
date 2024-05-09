@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Button, buttonVariants } from "./button"
+import { Button, buttonVariants } from "./ui/button"
 import { Moon, Sun } from "lucide-react"
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
