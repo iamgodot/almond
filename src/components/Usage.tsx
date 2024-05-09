@@ -18,13 +18,15 @@ import Link from "next/link"
 export const Usage = () => {
     return (
         <section id="usage" className="container text-center py-24">
-            <h2 className="text-3xl lg:text-4xl font-bold text-center">
-                A step-by-step guide for you to start
-            </h2>
-            <p className="mt-6 text-gray-600 text-center sm:text-lg">
-                It has never been this easy to chat through your resume towards
-                the best way to prepare yourself for the next job.
-            </p>
+            <div className="flex flex-col items-center">
+                <h2 className="text-3xl lg:text-4xl font-bold">
+                    A step-by-step guide for you to start
+                </h2>
+                <p className="mt-6 max-w-prose sm:text-lg dark:text-zinc-400">
+                    It has never been this easy to chat through your resume
+                    towards the best way to prepare yourself for the next job.
+                </p>
+            </div>
             <div className="flex justify-center mt-16">
                 <Carousel className="w-3/4 md:w-1/2">
                     <CarouselContent>
@@ -43,7 +45,7 @@ export const Usage = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-center mt-8 mb-28">
-                                    <span className="text-zinc-700">
+                                    <span className="text-left">
                                         You can register a new account or just
                                         login via your Google or GitHub account.
                                         After that either starting out with a
@@ -74,7 +76,7 @@ export const Usage = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-center mt-8 mb-28">
-                                    <span className="text-zinc-700">
+                                    <span className="text-left ">
                                         Your resume file will be properly
                                         processed in the fastest way and ready
                                         for you to chat with.
@@ -97,7 +99,7 @@ export const Usage = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-center mt-8 mb-28">
-                                    <span className="text-zinc-700">
+                                    <span className="text-left">
                                         Ask anything you have in mind to improve
                                         your resume and get the best advice the
                                         AI specialized to help with your career.

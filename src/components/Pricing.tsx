@@ -12,14 +12,14 @@ import { Check, X } from "lucide-react"
 
 export const Pricing = () => {
     return (
-        <section id="pricing" className="container py-24">
-            <h2 className="text-3xl md:text-4xl font-bold text-center">
-                Pricing
-            </h2>
-            <p className="mt-6 mb-16 text-gray-600 text-center sm:text-lg">
-                Whether you&apos;re just trying out our service or need more,
-                we&apos;ve got you covered!
-            </p>
+        <section id="pricing" className="container py-24 text-center">
+            <div className="flex flex-col items-center">
+                <h2 className="text-3xl md:text-4xl font-bold">Pricing</h2>
+                <p className="mt-6 mb-16 max-w-prose text-zinc-400 sm:text-lg">
+                    Whether you&apos;re just trying out our service or need
+                    more, we&apos;ve got you covered!
+                </p>
+            </div>
             <div className="grid md:grid-cols-2 gap-8">
                 <Card>
                     <CardHeader>
@@ -34,7 +34,7 @@ export const Pricing = () => {
                             </span>
                         </div>
 
-                        <CardDescription className="text-center">
+                        <CardDescription>
                             For small-sized files and limited chats.
                         </CardDescription>
                     </CardHeader>
@@ -82,7 +82,7 @@ export const Pricing = () => {
                                 per month
                             </span>
                         </div>
-                        <CardDescription className="text-center">
+                        <CardDescription>
                             For large files and unlimited chats.
                         </CardDescription>
                     </CardHeader>
