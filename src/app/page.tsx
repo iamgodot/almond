@@ -8,13 +8,10 @@ import { Hero } from "@/components/Hero"
 export default function Home() {
   return (
     <>
-      <NavBar />
-
       <Hero />
       <Features />
       <Usage />
       <Pricing />
-
       <Footer />
     </>
   )
