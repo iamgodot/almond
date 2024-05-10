@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button, buttonVariants } from "./ui/button"
-import { Moon, Sun } from "lucide-react"
+import { Sun, SunMoon } from "lucide-react"
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import Image from "next/image"
@@ -60,7 +60,7 @@ function NavBar() {
               }
             }}
           >
-            {theme === "dark" ? <Moon /> : <Sun />}
+            {theme === "dark" ? <SunMoon /> : <Sun />}
           </Button>
 
           {!user ? (
