@@ -2,11 +2,19 @@
 
 import Link from "next/link"
 import { Button, buttonVariants } from "./ui/button"
-import { Sun, SunMoon } from "lucide-react"
+import { LayoutDashboard, LogOut, Sun, SunMoon } from "lucide-react"
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import Image from "next/image"
 import { useTheme } from "next-themes"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function NavBar() {
   const { user } = useKindeBrowserClient()
@@ -75,34 +83,32 @@ function NavBar() {
               </LoginLink>
             </>
           ) : (
-            <>
-              <Link
-                href="/dashboard"
-                className={buttonVariants({
-                  variant: "ghost",
-                  size: "sm",
-                })}
-              >
-                Dashboard
-              </Link>
-              <LogoutLink
-                className={buttonVariants({
-                  variant: "ghost",
-                  size: "sm",
-                })}
-              >
-                Sign out
-              </LogoutLink>
-              {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
                 <Image
-                  src={user.picture}
-                  alt="user picture"
-                  width={48}
-                  height={48}
-                  className="rounded-md"
+                  src={user.picture || "https://i.pravatar.cc/150?img=2"}
+                  width={40}
+                  height={40}
+                  alt="User"
+                  className="rounded-full cursor-pointer"
                 />
-              )}
-            </>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Link href="/dashboard">
+                  <DropdownMenuItem>
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogoutLink className="cursor-default">Log out</LogoutLink>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
         </div>
       </div>
