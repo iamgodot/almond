@@ -13,18 +13,17 @@ function UploadButton() {
       <DialogTrigger asChild>
         <Button>Upload PDF</Button>
       </DialogTrigger>
-      <DialogContent>
-        <div className="flex flex-col h-64 m-4 border border-solid border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 items-center justify-between p-24">
-          <UploadDropzone
-            endpoint="pdfUploader"
-            onClientUploadComplete={(file) => {
-              router.push(`/dashboard/${file[0].serverData.id}`)
-            }}
-            onUploadError={(error: Error) => {
-              alert(`Upload error: ${error.message}`)
-            }}
-          />
-        </div>
+      <DialogContent className="flex items-center justify-center h-80 rounded-lg p-24">
+        <UploadDropzone
+          className="dark:bg-slate-800 ut-label:text-md ut-button:bg-blue-600 ut-button:ut-uploading:bg-blue-500"
+          endpoint="pdfUploader"
+          onClientUploadComplete={(file) => {
+            router.push(`/dashboard/${file[0].serverData.id}`)
+          }}
+          onUploadError={(error: Error) => {
+            console.log(`Upload error: ${error.message}`)
+          }}
+        />
       </DialogContent>
     </Dialog>
   )
