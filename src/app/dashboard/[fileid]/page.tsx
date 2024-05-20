@@ -1,43 +1,38 @@
-import { getUser } from "@/app/actions"
-import { notFound, redirect } from "next/navigation"
-import React from "react"
-import prisma from "@/db"
+"use client"
+
+import { getFileById } from "@/app/actions"
+import { notFound } from "next/navigation"
+import React, { useEffect, useState } from "react"
 import PdfRenderer from "@/components/PdfRenderer"
-import ChatWrapper from "@/components/chat/ChatWrapper"
+import Chat from "@/components/Chat"
+import { File } from "@prisma/client"
 
 interface PageProps {
   params: {
-    fileid: string
+    fileId: string
   }
 }
 
-async function Page({ params }: PageProps) {
-  const { fileid } = params
-  const user = await getUser()
-  if (!user) redirect(`/auth-callback?origin=dashboard/${fileid}`)
+function Page({ params }: PageProps) {
+  const { fileId } = params
+  const [file, setFile] = useState<File | null>(null)
 
-  const file = await prisma.file.findFirst({
-    where: {
-      id: fileid,
-      userId: user.id,
-    },
-  })
-  if (!file) notFound()
+  useEffect(() => {
+    const getFile = async () => {
+      const fileById = await getFileById(fileId)
+      if (!fileById) {
+        notFound()
+      } else {
+        setFile(fileById)
+      }
+    }
+    getFile()
+  }, [fileId])
+
   return (
-    <div className="flex-1 justify-between flex flex-col h-[calc(100vh-3.5rem)]">
-      <div className="mx-auto w-full max-w-8xl grow lg:flex xl:px-2">
-        {/* Left sidebar & main wrapper */}
-        <div className="flex-1 xl:flex">
-          <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-            {/* Main area */}
-            <PdfRenderer url={file.url} />
-          </div>
-        </div>
-
-        <div className="shrink-0 flex-[0.75] border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
-          <ChatWrapper fileId={file.id} />
-        </div>
-      </div>
+    <div className="flex flex-1 flex-col justify-between border lg:overflow-hidden lg:flex-row">
+      {file && <PdfRenderer url={file.url} />}
+      <Chat fileId={fileId} />
     </div>
   )
 }
