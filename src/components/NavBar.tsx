@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button, buttonVariants } from "./ui/button"
-import { LayoutDashboard, LogOut, Sun, SunMoon } from "lucide-react"
+import { FolderDot, LayoutDashboard, LogOut, Sun, SunMoon } from "lucide-react"
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import Image from "next/image"
@@ -96,6 +96,12 @@ function NavBar() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <Link href="/profile">
+                  <DropdownMenuItem>
+                    <FolderDot className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                </Link>
                 <Link href="/dashboard">
                   <DropdownMenuItem>
                     <LayoutDashboard className="mr-2 h-4 w-4" />
