@@ -37,6 +37,6 @@ const FileSchema = new Schema(
   { timestamps: true }
 )
 
-const FileModel = model("File", FileSchema)
+const FileModel = model("FileModel", FileSchema)
 
 export default FileModel
