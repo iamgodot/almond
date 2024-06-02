@@ -15,7 +15,7 @@ export const Pricing = () => {
     <section id="pricing" className="container py-24 text-center">
       <div className="flex flex-col items-center">
         <h2 className="text-3xl md:text-4xl font-bold">Pricing</h2>
-        <p className="mt-6 mb-16 max-w-prose text-zinc-400 sm:text-lg">
+        <p className="mt-6 mb-16 max-w-prose sm:text-lg dark:text-zinc-400">
           Whether you&apos;re just trying out our service or need more,
           we&apos;ve got you covered!
         </p>
