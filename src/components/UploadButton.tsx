@@ -18,7 +18,9 @@ function UploadButton() {
           className="dark:bg-slate-800 ut-label:text-md ut-button:bg-blue-600 ut-button:ut-uploading:bg-blue-500"
           endpoint="pdfUploader"
           onClientUploadComplete={(file) => {
-            router.push(`/dashboard/${file[0].serverData.id}`)
+            if (file[0]?.serverData?.id) {
+              router.push(`/dashboard/${file[0].serverData.id}`)
+            }
           }}
           onUploadError={(error: Error) => {
             console.log(`Upload error: ${error.message}`)
