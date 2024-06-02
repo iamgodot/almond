@@ -32,42 +32,42 @@ export default function Page() {
   }, [userId])
   return (
     <section className="container flex flex-col items-start py-8 gap-6">
-      (plan && (
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault()
-          const url = await createStripeSession(userId || "")
-          if (!url) {
-            alert("Failed to create stripe session")
-          } else {
-            console.log("url", url)
-            router.push(url)
-          }
-        }}
-      >
-        <Card className="w-full flex items-center justify-between">
-          <CardHeader className="">
-            <CardTitle>Subscription Plan</CardTitle>
-            <CardDescription>
-              You are currently on {plan!.name} plan.
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="flex items-center p-6">
-            <Button>
-              {plan!.isSubscribed ? "Manage subscription" : "Upgrade to Pro"}
-            </Button>
-            {plan!.isSubscribed && plan!.stripeCurrentPeriodEnd && (
-              <p>
-                {plan!.isCancelled
-                  ? "You plan will be cancelled on "
-                  : "Your plan will renew on "}
-                {format(plan!.stripeCurrentPeriodEnd, "dd/MM/yyyy")}
-              </p>
-            )}
-          </CardFooter>
-        </Card>
-      </form>
-      ))
+      {plan && (
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault()
+            const url = await createStripeSession(userId || "")
+            if (!url) {
+              alert("Failed to create stripe session")
+            } else {
+              console.log("url", url)
+              router.push(url)
+            }
+          }}
+        >
+          <Card className="w-full flex items-center justify-between">
+            <CardHeader className="">
+              <CardTitle>Subscription Plan</CardTitle>
+              <CardDescription>
+                You are currently on {plan!.name} plan.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter className="flex items-center p-6">
+              <Button>
+                {plan!.isSubscribed ? "Manage subscription" : "Upgrade to Pro"}
+              </Button>
+              {plan!.isSubscribed && plan!.stripeCurrentPeriodEnd && (
+                <p>
+                  {plan!.isCancelled
+                    ? "You plan will be cancelled on "
+                    : "Your plan will renew on "}
+                  {format(plan!.stripeCurrentPeriodEnd, "dd/MM/yyyy")}
+                </p>
+              )}
+            </CardFooter>
+          </Card>
+        </form>
+      )}
       <div className="w-full">
         <UserProfile routing="hash" />
       </div>
