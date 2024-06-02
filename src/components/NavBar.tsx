@@ -2,9 +2,14 @@
 
 import Link from "next/link"
 import { Button, buttonVariants } from "./ui/button"
-import { FolderDot, LayoutDashboard, LogOut, Sun, SunMoon } from "lucide-react"
-import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
+import {
+  FolderDot,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Sun,
+  SunMoon,
+} from "lucide-react"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 import {
@@ -15,9 +20,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  SignInButton,
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+  useUser,
+} from "@clerk/nextjs"
 
 function NavBar() {
-  const { user } = useKindeBrowserClient()
+  const { user } = useUser()
   const { theme, setTheme } = useTheme()
 
   return (
@@ -26,37 +38,35 @@ function NavBar() {
         <Link href="/" className="flex z-40 font-semibold">
           <span>Almond</span>
         </Link>
-        {!user ? (
-          <div className="hidden sm:flex">
-            <Link
-              href="#features"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              Features
-            </Link>
-            <Link
-              href="#usage"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              Usage
-            </Link>
-            <Link
-              href="#pricing"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              Pricing
-            </Link>
-          </div>
-        ) : null}
+        <div className="hidden sm:flex">
+          <Link
+            href="#features"
+            className={buttonVariants({
+              variant: "ghost",
+              size: "sm",
+            })}
+          >
+            Features
+          </Link>
+          <Link
+            href="#usage"
+            className={buttonVariants({
+              variant: "ghost",
+              size: "sm",
+            })}
+          >
+            Usage
+          </Link>
+          <Link
+            href="#pricing"
+            className={buttonVariants({
+              variant: "ghost",
+              size: "sm",
+            })}
+          >
+            Pricing
+          </Link>
+        </div>
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
@@ -71,22 +81,16 @@ function NavBar() {
             {theme === "dark" ? <SunMoon /> : <Sun />}
           </Button>
 
-          {!user ? (
-            <>
-              <LoginLink
-                className={buttonVariants({
-                  variant: "ghost",
-                  size: "sm",
-                })}
-              >
-                Sign in
-              </LoginLink>
-            </>
-          ) : (
+          <SignedOut>
+            <SignInButton>
+              <LogIn className="mr-2 h-4 w-4 cursor-pointer" />
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Image
-                  src={user.picture || "https://i.pravatar.cc/150?img=2"}
+                  src={user?.imageUrl || "https://i.pravatar.cc/150?img=2"}
                   width={40}
                   height={40}
                   alt="User"
@@ -97,25 +101,25 @@ function NavBar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <Link href="/profile">
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
                     <FolderDot className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
                 </Link>
                 <Link href="/dashboard">
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
                   <LogOut className="mr-2 h-4 w-4" />
-                  <LogoutLink className="cursor-default">Log out</LogoutLink>
+                  <SignOutButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          )}
+          </SignedIn>
         </div>
       </div>
     </nav>

@@ -1,8 +1,11 @@
 import React from "react"
 import Link from "next/link"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { SignInButton } from "@clerk/nextjs"
+import { currentUser } from "@clerk/nextjs/server"
 
-export const Hero = () => {
+export const Hero = async () => {
+  const user = await currentUser()
   return (
     <>
       <section className="container pt-48 pb-24 flex flex-col items-center text-center">
@@ -14,17 +17,28 @@ export const Hero = () => {
           upload your resume as a PDF file and start asking questions right
           away.
         </p>
-
-        <Link
-          className={buttonVariants({
-            size: "lg",
-            className: "mt-10 w-full md:w-1/4",
-          })}
-          href="/dashboard"
-          target="_blank"
-        >
-          Get started
-        </Link>
+        {user ? (
+          <Link
+            className={buttonVariants({
+              size: "lg",
+              className: "mt-10 w-full md:w-1/4",
+            })}
+            href="/dashboard"
+          >
+            Get started
+          </Link>
+        ) : (
+          <SignInButton>
+            <Button
+              className={buttonVariants({
+                size: "lg",
+                className: "mt-10 w-full md:w-1/4",
+              })}
+            >
+              Get started
+            </Button>
+          </SignInButton>
+        )}
       </section>
     </>
   )
