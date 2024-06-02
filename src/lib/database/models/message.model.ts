@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose"
+import { Schema, model, models, Document } from "mongoose"
 import { File } from "./file.model"
 import { User } from "./user.model"
 
@@ -35,6 +35,7 @@ const MessageSchema = new Schema(
   { timestamps: true }
 )
 
-const MessageModel = model("MessageModel", MessageSchema)
+const MessageModel =
+  models?.MessageModel || model("MessageModel", MessageSchema)
 
 export default MessageModel

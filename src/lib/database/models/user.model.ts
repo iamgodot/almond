@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose"
+import { Schema, model, models, Document } from "mongoose"
 
 export interface User extends Document {
   clerkId: string
@@ -61,6 +61,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 )
 
-const UserModel = model("UserModel", UserSchema)
+const UserModel = models?.UserModel || model("UserModel", UserSchema)
 
 export default UserModel

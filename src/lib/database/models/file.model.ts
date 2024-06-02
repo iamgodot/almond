@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose"
+import { Schema, model, models, Document } from "mongoose"
 import { User } from "./user.model"
 
 export interface File extends Document {
@@ -37,6 +37,6 @@ const FileSchema = new Schema(
   { timestamps: true }
 )
 
-const FileModel = model("FileModel", FileSchema)
+const FileModel = models?.FileModel || model("FileModel", FileSchema)
 
 export default FileModel
