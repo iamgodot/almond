@@ -27,10 +27,12 @@ import {
   SignedOut,
   useUser,
 } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
 
 function NavBar() {
   const { user } = useUser()
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
 
   return (
     <nav className="sticky top-0 z-40 w-full bg-white border-b dark:border-b-slate-700 dark:bg-background">
@@ -38,35 +40,37 @@ function NavBar() {
         <Link href="/" className="flex z-40 font-semibold">
           <span>Almond</span>
         </Link>
-        <div className="hidden sm:flex">
-          <Link
-            href="#features"
-            className={buttonVariants({
-              variant: "ghost",
-              size: "sm",
-            })}
-          >
-            Features
-          </Link>
-          <Link
-            href="#usage"
-            className={buttonVariants({
-              variant: "ghost",
-              size: "sm",
-            })}
-          >
-            Usage
-          </Link>
-          <Link
-            href="#pricing"
-            className={buttonVariants({
-              variant: "ghost",
-              size: "sm",
-            })}
-          >
-            Pricing
-          </Link>
-        </div>
+        {pathname === "/" && (
+          <div className="hidden sm:flex">
+            <Link
+              href="#features"
+              className={buttonVariants({
+                variant: "ghost",
+                size: "sm",
+              })}
+            >
+              Features
+            </Link>
+            <Link
+              href="#usage"
+              className={buttonVariants({
+                variant: "ghost",
+                size: "sm",
+              })}
+            >
+              Usage
+            </Link>
+            <Link
+              href="#pricing"
+              className={buttonVariants({
+                variant: "ghost",
+                size: "sm",
+              })}
+            >
+              Pricing
+            </Link>
+          </div>
+        )}
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
@@ -115,7 +119,7 @@ function NavBar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
                   <LogOut className="mr-2 h-4 w-4" />
-                  <SignOutButton />
+                  <SignOutButton signOutOptions={{ redirectUrl: "/" }} />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
