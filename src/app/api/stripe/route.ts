@@ -1,7 +1,7 @@
 import Stripe from "stripe"
-import prisma from "@/db"
 import { headers } from "next/headers"
 import { stripe } from "@/lib/stripe"
+import { updateUser } from "@/lib/actions/user.actions"
 
 export async function POST(request: Request): Promise<Response> {
   const body = await request.text()
@@ -33,10 +33,12 @@ export async function POST(request: Request): Promise<Response> {
       stripeCurrentPeriodEnd: new Date(sub.current_period_end * 1000),
     }
     console.log(data)
-    await prisma.user.update({
-      where: { id: session.metadata!.userId },
-      data: data,
-    })
+    await updateUser(
+      {
+        clerkId: session.metadata!.cler,
+      },
+      data
+    )
   }
 
   if (event.type === "invoice.payment_succeeded") {
@@ -46,10 +48,8 @@ export async function POST(request: Request): Promise<Response> {
       stripeCurrentPeriodEnd: new Date(sub.current_period_end * 1000),
     }
     console.log(data)
-    await prisma.user.update({
-      where: { stripeSubscriptionId: sub.id },
-      data: data,
-    })
+    // FIX: need support for bulk update
+    await updateUser({ stripeSubscriptionId: sub.id }, data)
   }
   return new Response(null, { status: 200 })
 }

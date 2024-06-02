@@ -1,4 +1,5 @@
 import { getPineconeStore } from "@/lib/pinecone"
+import { auth } from "@clerk/nextjs/server"
 import { ChatOpenAI } from "@langchain/openai"
 import { PromptTemplate } from "@langchain/core/prompts"
 import { LangChainAdapter, StreamingTextResponse } from "ai"
@@ -8,16 +9,13 @@ import {
   RunnablePassthrough,
 } from "@langchain/core/runnables"
 import { StringOutputParser } from "@langchain/core/output_parsers"
-import prisma from "@/db"
-import { getUser } from "@/app/actions"
+import { createMessage, getMessages } from "@/lib/actions/message.actions"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const fileId = searchParams.get("fileId")
-  const messages = await prisma.message.findMany({
-    where: { fileId },
-    orderBy: { createdAt: "asc" },
-  })
+  if (!fileId) return Response.json([])
+  const messages = await getMessages({ fileId })
   return Response.json(messages)
 }
 
@@ -38,28 +36,22 @@ Question: {question}
 const ANSWER_PROMPT = PromptTemplate.fromTemplate(answerTemplate)
 
 export async function POST(req: Request) {
-  const user = await getUser()
-  if (!user) {
-    return new Response("User not found", { status: 404 })
+  const { userId } = auth()
+  if (!userId) {
+    return new Response("Unauthorized", { status: 401 })
   }
-  const userId = user.id
   const { messages, fileId } = await req.json()
   const currentMessageContent = messages[messages.length - 1].content
 
-  const savedMessages = await prisma.message.findMany({
-    where: { fileId },
-    orderBy: { createdAt: "asc" },
-  })
+  const savedMessages = await getMessages({ fileId })
   const previousMessages = savedMessages.slice(0, -1).map((message) => {
     return `${message.isUserMessage ? "user" : "assistant"}: ${message.text}`
   })
-  await prisma.message.create({
-    data: {
-      text: currentMessageContent,
-      isUserMessage: true,
-      userId,
-      fileId,
-    },
+  await createMessage({
+    text: currentMessageContent,
+    isUserMessage: true,
+    userId,
+    fileId,
   })
   const model = new ChatOpenAI({
     apiKey: process.env.OPENAI_API_KEY!,
@@ -100,13 +92,11 @@ export async function POST(req: Request) {
   })
   const aiStream = LangChainAdapter.toAIStream(stream, {
     async onCompletion(completion: string) {
-      await prisma.message.create({
-        data: {
-          text: completion,
-          isUserMessage: false,
-          userId,
-          fileId,
-        },
+      await createMessage({
+        text: completion,
+        isUserMessage: false,
+        userId,
+        fileId,
       })
     },
   })

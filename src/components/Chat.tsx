@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from "react"
 import { useChat } from "ai/react"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
-import { Message } from "ai"
+import { Message as AIMessage } from "ai"
 import Markdown from "react-markdown"
-import { DBMessage } from "@/@types/main"
+import { Message } from "@/lib/database/models/message.model"
 
 export default function Chat({
   fileId,
   prevMessages,
 }: {
   fileId: string
-  prevMessages: DBMessage[]
+  prevMessages: Message[]
 }) {
-  const formattedPrevMessages: Message[] = prevMessages.map(
-    (item: DBMessage) => ({
+  const formattedPrevMessages: AIMessage[] = prevMessages.map(
+    (item: Message) => ({
       id: item.id,
       content: item.text,
       role: item.isUserMessage ? "user" : "assistant",
