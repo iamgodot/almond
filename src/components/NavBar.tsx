@@ -119,7 +119,8 @@ function NavBar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
                   <LogOut className="mr-2 h-4 w-4" />
-                  <SignOutButton signOutOptions={{ redirectUrl: "/" }} />
+                  {/* FIX: redirect url not working */}
+                  <SignOutButton redirectUrl="/" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
