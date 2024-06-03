@@ -2,6 +2,7 @@ import { Schema, model, models, Document } from "mongoose"
 import { User } from "./user.model"
 
 export interface File extends Document {
+  _id: string
   name: string
   status: string
   url: string

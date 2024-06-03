@@ -6,6 +6,7 @@ import { OpenAIEmbeddings } from "@langchain/openai"
 import { PineconeStore } from "@langchain/pinecone"
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 import { createFile, getFile, updateFile } from "@/lib/actions/file.actions"
+import { getUser } from "@/lib/actions/user.actions"
 
 const f = createUploadthing()
 
@@ -14,7 +15,8 @@ export const ourFileRouter = {
     .middleware(async ({}) => {
       const { userId } = auth()
       if (!userId) throw new Error("Unauthorized")
-      return { userId }
+      const user = await getUser(userId)
+      return { user: { _id: user._id } }
     })
     .onUploadComplete(
       async ({
@@ -29,7 +31,7 @@ export const ourFileRouter = {
         const fileCreated = await createFile({
           key: file.key,
           name: file.name,
-          userId: metadata.userId,
+          user: metadata.user._id,
           url: `https://utfs.io/f/${file.key}`,
           status: "PROCESSING",
         })
@@ -53,7 +55,7 @@ export const ourFileRouter = {
           await PineconeStore.fromDocuments(
             chunkedDocs,
             new OpenAIEmbeddings(),
-            { pineconeIndex, namespace: fileCreated.id, maxConcurrency: 5 }
+            { pineconeIndex, namespace: fileCreated._id, maxConcurrency: 5 }
           )
 
           await updateFile(file.key, { status: "SUCCESS" })
@@ -62,7 +64,7 @@ export const ourFileRouter = {
           console.log(error)
           await updateFile(file.key, { status: "FAILED" })
         }
-        return { id: fileCreated.id }
+        return { id: fileCreated._id }
       }
     ),
 } satisfies FileRouter

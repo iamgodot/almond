@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { UploadDropzone } from "@/lib/utils"
 import { useRouter } from "next/navigation"
+import { getFile } from "@/lib/actions/file.actions"
 
 function UploadButton() {
   const router = useRouter()
@@ -17,9 +18,14 @@ function UploadButton() {
         <UploadDropzone
           className="dark:bg-slate-800 ut-label:text-md ut-button:bg-blue-600 ut-button:ut-uploading:bg-blue-500"
           endpoint="pdfUploader"
-          onClientUploadComplete={(file) => {
-            if (file[0]?.serverData?.id) {
-              router.push(`/dashboard/${file[0].serverData.id}`)
+          onClientUploadComplete={async (file) => {
+            if (file[0]?.key) {
+              const uploadedFile = await getFile({ key: file[0].key })
+              if (!uploadedFile) {
+                console.error("Failed to get uploaded file")
+                return
+              }
+              router.push(`/dashboard/${uploadedFile._id}`)
             }
           }}
           onUploadError={(error: Error) => {

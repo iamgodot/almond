@@ -15,11 +15,11 @@ export async function createUser(user: CreateUserParams) {
   }
 }
 
-export async function getUser(userId: string) {
+export async function getUser(clerkId: string) {
   try {
     await connectToDatabase()
-    const user = await UserModel.findOne({ clerkId: userId })
-    if (!user) throw new Error("User not found for:" + userId)
+    const user = await UserModel.findOne({ clerkId })
+    if (!user) throw new Error("User not found for:" + clerkId)
     return JSON.parse(JSON.stringify(user))
   } catch (error) {
     handleError(error)

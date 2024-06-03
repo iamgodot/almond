@@ -27,12 +27,12 @@ declare type CreateFileParams = {
   key: string
   name: string
   url: string
-  userId: string
+  user: string
   status: string
 }
 
 declare type FileIdentifier = {
-  fileId?: string
+  _id?: string
   key?: string
 }
 
@@ -43,12 +43,8 @@ declare type UpdateFileParams = {
 declare type CreateMessageParams = {
   text: string
   isUserMessage: boolean
-  userId: string
-  fileId: string
-}
-
-declare type MessageIdentifier = {
-  fileId: string
+  user: string
+  file: string
 }
 
 declare type Plan = {
