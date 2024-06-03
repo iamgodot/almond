@@ -29,14 +29,11 @@ Standalone question:`
 const CONDENSE_QUESTION_PROMPT = PromptTemplate.fromTemplate(
   condenseQuestionTemplate
 )
-const answerTemplate = `Use the following context to answer the question.
-If you don't know the anwser, just say "I don't know". DO NOT try to make up an answer.
-If the question is not related to the context, politely respond that you're tuned to answer questions related to the context.
+const answerTemplate = `Your task is to assist with resume optimization. Start by verifying if the provided context is a resume. If it is not, simply reply with "I can only give suggestions for resumes." If it is a resume, answer questions strictly related to improving the resume using only the information in the context. If the question cannot be answered based on the given context, respond with "Sorry, I don't know enough information to answer this question." Avoid guessing or fabricating answers.
 
-{context}
+Context: {context}
 
-Question: {question}
-Hepful answer in Markdown:`
+Question: {question}`
 
 const ANSWER_PROMPT = PromptTemplate.fromTemplate(answerTemplate)
 
