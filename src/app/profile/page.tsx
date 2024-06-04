@@ -17,9 +17,11 @@ import {
   getUserSubscriptionPlan,
 } from "@/lib/actions/payment.actions"
 import { useAuth } from "@clerk/nextjs"
+import Loading from "../loading"
 
 export default function Page() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState<Boolean>(true)
   const [plan, setPlan] = useState<Plan | null>(null)
   const { userId } = useAuth()
 
@@ -27,9 +29,11 @@ export default function Page() {
     const getPlan = async () => {
       const stripePlan = await getUserSubscriptionPlan(userId || "")
       setPlan(stripePlan)
+      setIsLoading(false)
     }
     getPlan()
   }, [userId])
+  if (isLoading) return <Loading />
   return (
     <section className="container flex flex-col items-start py-8 gap-6">
       {plan && (
