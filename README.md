@@ -25,4 +25,4 @@ Feel free to [open an issue](https://github.com/iamgodot/almond/issues) or submi
 
 ## License
 
-![MIT](https://img.shields.io/github/license/iamgodot/almond?label=license&style=for-the-badge)
+[![MIT](https://img.shields.io/github/license/iamgodot/almond?label=license&style=for-the-badge)](./LICENSE)
